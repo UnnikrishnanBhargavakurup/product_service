@@ -281,7 +281,7 @@ final class ProductController extends AbstractFOSRestController
      *          required=true,
      *          @SWG\Schema(
      *              type="array",
-     *              example="[18, 19]",
+     *              example="[6, 7]",
      *              @SWG\Items(
      *                  type="integer",
      *                  format="int32"

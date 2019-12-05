@@ -30,13 +30,13 @@ class Product
     private $price;
 
     /**
-     * Many products can have many child products.
+     * Many child products can have many parent products.
      * @ORM\ManyToMany(targetEntity="Product", mappedBy="child_products")
      */
     private $parent_products;
 
     /**
-     * Many products have many child products.
+     * Many parent products can have many child products.
      * @ORM\ManyToMany(targetEntity="Product", inversedBy="parent_products")
      * @ORM\JoinTable(name="product_bundle",
      *      joinColumns={@ORM\JoinColumn(name="parent_product_id", referencedColumnName="id")},
