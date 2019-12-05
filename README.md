@@ -86,7 +86,7 @@ Version 1.0.0:
 
 ## Acknowledgements
 
-We have an issue with `500 exception handling` in API's. You can see the details of the issue [Symfony 4.4 compatibility: use Either ErrorListener or ExceptionListener][3] this issue will taken care of once the fix is merged to master and available for download.
+We have an issue with `500 exception handling` in API's. You can see the details of the issue here: [Symfony 4.4 compatibility: use Either ErrorListener or ExceptionListener][3], this issue will be taken care of once the fix is merged to master and available for package updation.
 
 Released under the [MIT License](http://www.opensource.org/licenses/mit-license.php).
 
