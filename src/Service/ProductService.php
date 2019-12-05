@@ -2,7 +2,6 @@
 
 namespace App\Service;
 
-
 use App\Entity\Product;
 use App\Model\ProductRepositoryInterface;
 use Doctrine\ORM\EntityNotFoundException;
@@ -23,7 +22,8 @@ final class ProductService
      * ProductService constructor.
      * @param ProductRepositoryInterface $productRepository
      */
-    public function __construct(ProductRepositoryInterface $productRepository){
+    public function __construct(ProductRepositoryInterface $productRepository)
+    {
         $this->productRepository = $productRepository;
     }
 
@@ -36,7 +36,7 @@ final class ProductService
     {
         $product = $this->productRepository->findById($productId);
         if (!$product) {
-            throw new EntityNotFoundException('Product with id '. $productId .' does not exist!');
+            throw new EntityNotFoundException('Product with id ' . $productId . ' does not exist!');
         }
     }
 
@@ -57,12 +57,11 @@ final class ProductService
      * @return Product
      */
     public function createProduct(
-        string $name, 
-        float $price, 
-        int $stock, 
-        string $description = "", 
-        bool $is_active = TRUE): Product
-    {
+        string $name,
+        float $price,
+        int $stock,
+        string $description = "",
+        bool $is_active = true): Product {
         $product = new Product();
         $product->setName($name);
         $product->setPrice($price);
@@ -83,13 +82,13 @@ final class ProductService
     {
         $product = $this->productRepository->findById($productId);
         if (!$product) {
-            throw new EntityNotFoundException('Product with id '. $productId .' does not exist!');
+            throw new EntityNotFoundException('Product with id ' . $productId . ' does not exist!');
         }
         //TODO: insted of fetching one by one we can fetch everything together and compare with ids
-        foreach($childProducts as $childProductId) {
+        foreach ($childProducts as $childProductId) {
             $childProduct = $this->productRepository->findById($childProductId);
             if (!$childProduct) {
-                throw new EntityNotFoundException('Product with id '. $childProductId .' does not exist!');
+                throw new EntityNotFoundException('Product with id ' . $childProductId . ' does not exist!');
             }
             $product->addChildProduct($childProduct);
         }
@@ -106,16 +105,15 @@ final class ProductService
      * @throws EntityNotFoundException
      */
     public function updateProduct(
-        int $productId, 
-        string $name, 
-        float $price, 
-        int $stock, 
-        string $description = "", 
-        bool $is_active = TRUE): Product
-    {
+        int $productId,
+        string $name,
+        float $price,
+        int $stock,
+        string $description = "",
+        bool $is_active = true): Product {
         $product = $this->productRepository->findById($productId);
         if (!$product) {
-            throw new EntityNotFoundException('Product with id '. $productId .' does not exist!');
+            throw new EntityNotFoundException('Product with id ' . $productId . ' does not exist!');
         }
 
         $product->setTitle($title);
@@ -133,7 +131,7 @@ final class ProductService
     {
         $product = $this->productRepository->findById($productId);
         if (!$product) {
-            throw new EntityNotFoundException('Product with id '.$productId.' does not exist!');
+            throw new EntityNotFoundException('Product with id ' . $productId . ' does not exist!');
         }
 
         $this->productRepository->delete($product);

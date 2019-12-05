@@ -4,8 +4,8 @@ namespace App\Controller\Rest;
 
 use App\Entity\Product;
 use App\Service\ProductService;
-use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
+use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\View\View;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use Swagger\Annotations as SWG;
@@ -64,6 +64,11 @@ final class ProductController extends AbstractFOSRestController
      *              @Model(type=Product::class)
      *          )
      *      ),
+     *
+     *      @SWG\Response(
+     *          response="500",
+     *           description="Internal Server Error"
+     *      ),
      * )
      *
      * @Rest\Post("/products")
@@ -106,6 +111,11 @@ final class ProductController extends AbstractFOSRestController
      *              @Model(type=Product::class)
      *          )
      *      ),
+     *
+     *      @SWG\Response(
+     *          response="500",
+     *           description="Internal Server Error"
+     *      ),
      * )
      *
      * @Rest\Get("/products/{productId}")
@@ -134,6 +144,11 @@ final class ProductController extends AbstractFOSRestController
      *              type="array",
      *              @Model(type=Product::class)
      *          )
+     *      ),
+     *
+     *      @SWG\Response(
+     *          response="500",
+     *           description="Internal Server Error"
      *      ),
      * )
      *
@@ -187,6 +202,11 @@ final class ProductController extends AbstractFOSRestController
      *              @Model(type=Product::class)
      *          )
      *      ),
+     *
+     *      @SWG\Response(
+     *          response="500",
+     *           description="Internal Server Error"
+     *      ),
      * )
      * @Rest\Put("/products/{productId}")
      * @param int $productId
@@ -226,6 +246,11 @@ final class ProductController extends AbstractFOSRestController
      *          response="200",
      *          description="Success",
      *      ),
+     *
+     *      @SWG\Response(
+     *          response="500",
+     *           description="Internal Server Error"
+     *      ),
      * )
      *
      * @Rest\Delete("/products/{productId}")
@@ -246,14 +271,17 @@ final class ProductController extends AbstractFOSRestController
      *      produces={"application/json"},
      *      tags={"Product"},
      *      consumes={"application/json"},
+     *      produces={"application/json"},
      *
      *      @SWG\Parameter(
      *          name="childProducts",
-     *          in="body",
      *          description="Provide a list of child product ids",
+     *          in="body",
+     *          format="application/json",
      *          required=true,
      *          @SWG\Schema(
      *              type="array",
+     *              example="[18, 19]",
      *              @SWG\Items(
      *                  type="integer",
      *                  format="int32"
@@ -262,12 +290,17 @@ final class ProductController extends AbstractFOSRestController
      *      ),
      *
      *      @SWG\Response(
-     *          response="200",
+     *          response="201",
      *          description="Success",
      *          @SWG\Schema(
      *              type="array",
      *              @Model(type=Product::class)
      *          )
+     *      ),
+     *
+     *      @SWG\Response(
+     *          response="500",
+     *           description="Internal Server Error"
      *      ),
      * )
      *
@@ -277,8 +310,11 @@ final class ProductController extends AbstractFOSRestController
      */
     public function createProductBundle(int $productId, Request $request): View
     {
+        // get child product ids from request body
+        $childProducts = json_decode($request->getContent(), true);
         $product = $this->productService->createProductBundle(
-            $request->get('childProducts')
+            $productId,
+            $childProducts
         );
 
         // In case our POST was a success we need to return a 201 HTTP CREATED response with the created object
