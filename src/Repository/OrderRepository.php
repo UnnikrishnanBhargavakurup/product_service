@@ -2,7 +2,7 @@
 
 namespace App\Repository;
 
-use App\Entity\Order;
+use App\Entity\Orders;
 use App\Model\OrderRepositoryInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
@@ -17,14 +17,14 @@ class OrderRepository extends ServiceEntityRepository implements OrderRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Order::class);
+        parent::__construct($registry, Orders::class);
     }
 
     /**
      * @param int $orderId
      * @return Order
      */
-    public function findById(int $orderId): ?Order
+    public function findById(int $orderId): ?Orders
     {
         return $this->find($orderId);
     }
@@ -40,7 +40,7 @@ class OrderRepository extends ServiceEntityRepository implements OrderRepository
     /**
      * @param Order $order
      */
-    public function save(Order $order): void
+    public function save(Orders $order): void
     {
         $this->_em->persist($order);
         $this->_em->flush();
@@ -49,7 +49,7 @@ class OrderRepository extends ServiceEntityRepository implements OrderRepository
     /**
      * @param Order $order
      */
-    public function delete(Order $order): void
+    public function delete(Orders $order): void
     {
         $this->_em->remove($order);
         $this->_em->flush();

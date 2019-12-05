@@ -2,7 +2,7 @@
 
 namespace App\Model;
 
-use App\Entity\Order;
+use App\Entity\Orders;
  
 /**
  * Interface OrderRepositoryInterface
@@ -13,9 +13,9 @@ interface OrderRepositoryInterface
 
     /**
      * @param int $orderId
-     * @return Order
+     * @return Orders
      */
-    public function findById(int $orderId): ?Order;
+    public function findById(int $orderId): ?Orders;
 
     /**
      * @return array
@@ -23,13 +23,13 @@ interface OrderRepositoryInterface
     public function _findAll(): array;
 
     /**
-     * @param Order $order
+     * @param Orders $order
      */
-    public function save(Order $order): void;
+    public function save(Orders $order): void;
 
     /**
-     * @param Order $order
+     * @param Orders $order
      */
-    public function delete(Order $order): void;
+    public function delete(Orders $order): void;
 
 }

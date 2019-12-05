@@ -34,10 +34,17 @@ class Orders
      */
     private $items;
 
+    /**
+     * @ORM\Column(name="status", type="string", columnDefinition="enum('new', 'in_checkout', 'on_hold', 'closed', 'shipped', 'delivered', 'returned', 'canceled')")
+     */
+    private $status;
+
     public function __construct()
     {
         $this->items = new ArrayCollection();
+        $this->setDate(new \DateTime());
     }
+
 
     public function getId(): ?int
     {
@@ -64,7 +71,7 @@ class Orders
     public function setCustomer(?Customer $customer): self
     {
         $this->customer = $customer;
-
+        $this->customer->addOrder($this);
         return $this;
     }
 
@@ -100,6 +107,18 @@ class Orders
     }
 
     public function __toString() {
-        return $this->id;
+        return (string)$this->id;
+    }
+
+    public function getStatus(): ?string
+    {
+        return $this->status;
+    }
+
+    public function setStatus(string $status): self
+    {
+        $this->status = $status;
+
+        return $this;
     }
 }

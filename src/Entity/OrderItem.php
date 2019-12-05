@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\Orders;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -26,7 +27,7 @@ class OrderItem
      * @ORM\ManyToOne(targetEntity="App\Entity\Product")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $products;
+    private $product;
 
     /**
      * @ORM\Column(type="smallint")
@@ -38,26 +39,26 @@ class OrderItem
         return $this->id;
     }
 
-    public function getOrder(): ?self
+    public function getOrder(): ?Orders
     {
         return $this->_order;
     }
 
-    public function setOrder(?self $_order): self
+    public function setOrder(?Orders $_order): self
     {
         $this->_order = $_order;
 
         return $this;
     }
 
-    public function getProducts(): ?Product
+    public function getProduct(): ?Product
     {
-        return $this->products;
+        return $this->product;
     }
 
-    public function setProducts(?Product $products): self
+    public function setProduct(?Product $product): self
     {
-        $this->products = $products;
+        $this->product = $product;
 
         return $this;
     }
@@ -72,5 +73,10 @@ class OrderItem
         $this->count = $count;
 
         return $this;
+    }
+
+    public function __toString()
+    {
+        return (string) $this->id;
     }
 }

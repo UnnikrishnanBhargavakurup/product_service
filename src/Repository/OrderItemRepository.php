@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\OrderItem;
+use App\Model\OrderItemRepositoryInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 
@@ -12,39 +13,45 @@ use Doctrine\Common\Persistence\ManagerRegistry;
  * @method OrderItem[]    findAll()
  * @method OrderItem[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class OrderItemRepository extends ServiceEntityRepository
+class OrderItemRepository extends ServiceEntityRepository implements OrderItemRepositoryInterface
 {
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, OrderItem::class);
     }
 
-    // /**
-    //  * @return OrderItem[] Returns an array of OrderItem objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+     * @param int $OrderItemId
+     * @return OrderItem
+     */
+    public function findById(int $OrderItemId): ?OrderItem
     {
-        return $this->createQueryBuilder('o')
-            ->andWhere('o.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('o.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
+        return $this->find($OrderItemId);
     }
-    */
 
-    /*
-    public function findOneBySomeField($value): ?OrderItem
+    /**
+     * @return array
+     */
+    public function _findAll(): array
     {
-        return $this->createQueryBuilder('o')
-            ->andWhere('o.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+        return $this->findAll();
     }
-    */
+
+    /**
+     * @param OrderItem $OrderItem
+     */
+    public function save(OrderItem $OrderItem): void
+    {
+        $this->_em->persist($OrderItem);
+        $this->_em->flush();
+    }
+
+    /**
+     * @param OrderItem $OrderItem
+     */
+    public function delete(OrderItem $OrderItem): void
+    {
+        $this->_em->remove($OrderItem);
+        $this->_em->flush();
+    }
 }
